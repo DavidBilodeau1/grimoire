@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block body %}
+<!-- Insert this where you want the table to appear -->
+<div id="books">Loading...</div>
+
+<!-- Insert this at the end of your body element, but before the closing tag -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+<script>
+$(function() {
+    $('#books').initDataTables({{ datatable_settings(datatable) }});
+});
+</script>
+{% endblock %}
