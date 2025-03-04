@@ -19,7 +19,9 @@
 
                             <div class="mb-4">
                                 <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tags:</label>
-                                <vue-tags-input element-id="tags" v-model="form.tags" :existing-tags="existingTags" @tag-added="addTag" />
+                                <vue3-tags-input :tags="tags"
+                                                 placeholder="enter some tags"
+                                                 @tags-changed="handleChangeTag"/>
                             </div>
 
                             <PrimaryButton type="submit">Create</PrimaryButton>
@@ -31,26 +33,48 @@
     </AuthenticatedLayout>
 </template>
 
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+<script>
+import { defineComponent, ref } from 'vue';
 import {Head, useForm} from '@inertiajs/vue3';
-import VueTagsInput from "@sipec/vue3-tags-input";
+import Vue3TagsInput from "@sipec/vue3-tags-input";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
-const form = useForm({
-    name: '',
-    tags: [],
+export default defineComponent({
+    name: 'BasicExample',
+
+    components: {
+        Head,
+        Vue3TagsInput,
+        AuthenticatedLayout,
+        PrimaryButton,
+    },
+
+    setup() {
+        const tags = ref([]);
+        const form = useForm({
+            name: '',
+            tags: [],
+        });
+
+        const submit = () => {
+            form.tags = tags.value;
+            form.post(route('reading-goals.store'));
+        };
+
+        return { form, submit, tags };
+    },
+
+    data() {
+        return {
+            tags: []
+        }
+    },
+
+    methods: {
+        handleChangeTag(tags) {
+            this.tags = tags;
+        },
+    },
 });
-
-let existingTags = [];
-
-const addTag = (newTag) => {
-    existingTags.push(newTag);
-    existingTags = [...new Set(existingTags)];
-};
-
-const submit = () => {
-    form.tags = tags;
-    form.post(route('reading-goals.store'));
-};
 </script>

@@ -38,7 +38,7 @@ class Book extends Model
 
     public function bookLists()
     {
-        return $this->belongsToMany(BookList::class)->using(BookUser::class);
+        return $this->belongsToMany(Bookshelf::class)->using(BookUser::class);
     }
 
     // app/Models/Book.php

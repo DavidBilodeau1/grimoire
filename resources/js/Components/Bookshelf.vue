@@ -1,11 +1,10 @@
 <template>
     <div class="bookshelf my-3">
         <div v-if="books.length > 0">
-            <div class="shelf" v-for="(shelf, index) in shelves" :key="index">
+            <div class="shelf-row pb-4" v-for="(shelf, index) in shelves" :key="index">
                 <div class="book" v-for="book in shelf" :key="book.id">
-                    <img :src="book.cover_image" :alt="book.title" class="cover-image"
-                         @click="$emit('book-click', book)">
-                    <div class="book-details">
+                    <img :src="book.cover_image" :alt="book.title" class="cover-image" @click="$emit('book-click', book)">
+                    <div class="book-details hidden">
                         <div class="buttons flex">
                             <a :href="route('books.show', book.id)" class="details-link">Details</a>
                             <button @click="$emit('add-to-list', book)" class="details-link">Add to bookshelf</button>
@@ -14,12 +13,16 @@
                         <p class="author">{{ book.author }}</p>
                     </div>
                 </div>
+                <div class="shelf-shadows"></div>
+                <div class="shelf"></div>
             </div>
         </div>
         <main v-else class="py-10">
             <div class="py-12">
                 <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div class="bg-white rounded-lg shadow-md p-6"><p class="text-gray-700 leading-relaxed">Your bookshelf is empty. Add some books to start your collection!</p></div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <p class="text-gray-700 leading-relaxed">Your bookshelf is empty. Add some books to start your collection!</p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -39,9 +42,10 @@ export default {
             const shelves = [];
             let currentShelf = [];
             let shelfSize = 0;
+            const booksPerShelf = this.getBooksPerShelf(); // Determine books per shelf based on screen size
 
             for (const book of this.books) {
-                if (shelfSize >= 5) { // Adjust the number to control the number of books per shelf
+                if (shelfSize >= booksPerShelf) {
                     shelves.push(currentShelf);
                     currentShelf = [];
                     shelfSize = 0;
@@ -58,6 +62,17 @@ export default {
             return shelves;
         },
     },
+    methods: {
+        getBooksPerShelf() {
+            if (window.innerWidth < 640) { // Adjust breakpoint as needed
+                return 2; // Display 2 books per shelf on small screens
+            } else if (window.innerWidth < 768) {
+                return 3; // Display 3 books per shelf on medium screens
+            } else {
+                return 5; // Display 5 books per shelf on large screens
+            }
+        }
+    }
 };
 </script>
 
@@ -68,12 +83,36 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
 }
 
-.shelf {
+.shelf-row {
     display: flex;
     margin-bottom: 1rem;
     justify-content: space-evenly;
+    position: relative;
+}
+
+.shelf {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 2px;
+    z-index: 3;
+}
+
+.shelf-shadows {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    border-radius: 2px;
+    z-index: 1;
+    box-shadow: 0px -5px 3px 0px rgba(170, 170, 170, 0.2), 0px 15px 20px 0px rgba(170, 170, 170, 0.7), 0px 5px 5px 0px rgba(119, 119, 119, 0.3);
 }
 
 .book {

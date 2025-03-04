@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-100">
+        <div class="min-h-screen bg-gradient-to-br">
             <nav class="bg-white shadow-md">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
@@ -32,7 +32,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('books')" :active="route().current('books')">
                                     Books
                                 </NavLink>
-                                <NavLink :href="route('book-lists.index')" :active="route().current('book-lists.index')">
+                                <NavLink :href="route('bookshelves')" :active="route().current('bookshelves')">
                                     My Bookshelves
                                 </NavLink>
                                 <NavLink :href="route('reading-goals.index')" :active="route().current('reading-goals.index')">

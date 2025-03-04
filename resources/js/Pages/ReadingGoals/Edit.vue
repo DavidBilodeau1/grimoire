@@ -1,9 +1,9 @@
 <template>
-    <Head title="Create Reading Goal" />
+    <Head :title="'Edit ' + readingGoal.name" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Reading Goal
+                Edit {{ readingGoal.name }}
             </h2>
         </template>
 
@@ -19,10 +19,10 @@
 
                             <div class="mb-4">
                                 <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tags:</label>
-                                <vue-tags-input element-id="tags" v-model="form.tags" :existing-tags="existingTags" @tag-added="addTag" />
+                                <vue3-tags-input :tags="tags" placeholder="enter some tags" @tags-changed="handleChangeTag" />
                             </div>
 
-                            <PrimaryButton type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</PrimaryButton>
+                            <PrimaryButton type="submit">Update</PrimaryButton>
                         </form>
                     </div>
                 </div>
@@ -31,25 +31,49 @@
     </AuthenticatedLayout>
 </template>
 
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head, useForm} from '@inertiajs/vue3';
-import VueTagsInput from "@sipec/vue3-tags-input";
+<script>
+import { defineComponent, ref } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import Vue3TagsInput from "@sipec/vue3-tags-input";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
-const form = useForm({
-    name: '',
-    tags: [],
+export default defineComponent({
+    name: 'EditReadingGoal',
+
+    components: {
+        Head,
+        Vue3TagsInput,
+        AuthenticatedLayout,
+        PrimaryButton,
+    },
+
+    props: {
+        readingGoal: {
+            type: Object,
+            required: true,
+        },
+    },
+
+    setup(props) {
+        const tags = ref(props.readingGoal.tags.map(tag => tag.name)); // Initialize tags from props
+        const form = useForm({
+            name: props.readingGoal.name,
+            tags: [],
+        });
+
+        const submit = () => {
+            form.tags = tags.value;
+            form.put(route('reading-goals.update', props.readingGoal.id));
+        };
+
+        return { form, submit, tags };
+    },
+
+    methods: {
+        handleChangeTag(newTags) {
+            this.tags = newTags;
+        },
+    },
 });
-
-let existingTags = [];
-
-const addTag = (newTag) => {
-    existingTags.push(newTag);
-    existingTags = [...new Set(existingTags)];
-};
-
-const submit = () => {
-    form.post(route('reading-goals.store'));
-};
 </script>

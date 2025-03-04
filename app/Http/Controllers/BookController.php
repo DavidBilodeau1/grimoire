@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\BookList;
+use App\Models\Bookshelf;
 use App\Models\BookUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class BookController extends Controller
         }
 
         $books = $books->orderBy($sortBy, $sortDirection)->paginate(10);
-        $bookLists = BookList::where('user_id', Auth::id())->get();
+        $bookLists = Bookshelf::where('user_id', Auth::id())->get();
 
         return Inertia::render('Books/Index', [
             'books' => $books,
@@ -42,7 +42,7 @@ class BookController extends Controller
 
     public function show(Book $book): Response
     {
-        $bookLists = BookList::where('user_id', Auth::id())->get();
+        $bookLists = Bookshelf::where('user_id', Auth::id())->get();
 
         // Fetch the user-specific information for this book
         $userBookInfo = BookUser::where('user_id', Auth::id())->where('book_id', $book->id)->first();
@@ -60,7 +60,7 @@ class BookController extends Controller
             'book_list_id' => 'required|exists:book_lists,id',
         ]);
 
-        $bookList = BookList::findOrFail($request->book_list_id);
+        $bookList = Bookshelf::findOrFail($request->book_list_id);
 
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {
@@ -140,7 +140,7 @@ class BookController extends Controller
                 preg_match('/\(#(\d+)\)/', $bookshelfPositions[$index], $matches);
                 $position = $matches[1] ?? null;
 
-                $bookList = BookList::firstOrCreate([
+                $bookList = Bookshelf::firstOrCreate([
                     'user_id' => Auth::id(),
                     'name' => $bookshelfName,
                 ]);

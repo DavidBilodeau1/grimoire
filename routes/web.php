@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\BookListController;
 use App\Http\Controllers\ReadingGoalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Livewire\ListBookLists;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -37,9 +37,14 @@ Route::group([
     Route::post('/do-import', [BookController::class, 'doImport'])->name('books.do-import');
 });
 
+Route::group([
+    'prefix' => 'bookshelves',
+], function () {
+    Route::get('/', ListBookLists::class)->name('bookshelves');
+});
 
 
-Route::resource('book-lists', BookListController::class);
+
 
 // routes/web.php
 Route::resource('reading-goals', ReadingGoalController::class)

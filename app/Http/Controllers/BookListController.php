@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BookList;
+use App\Models\Bookshelf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,7 @@ class BookListController extends Controller
 {
     public function index(): Response
     {
-        $bookLists = BookList::where('user_id', Auth::id())->get();
+        $bookLists = Bookshelf::where('user_id', Auth::id())->get();
 
         return Inertia::render('BookLists/Index', [
             'bookLists' => $bookLists,
@@ -32,7 +32,7 @@ class BookListController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        BookList::create([
+        Bookshelf::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'is_main' => false, // Ensure it's not a main list
@@ -41,7 +41,7 @@ class BookListController extends Controller
         return redirect()->route('book-lists.index');
     }
 
-    public function show(BookList $bookList): Response
+    public function show(Bookshelf $bookList): Response
     {
         if ($bookList->user_id !== Auth::id()) {
             abort(403);
@@ -58,7 +58,7 @@ class BookListController extends Controller
             'bookList' => $bookList,
         ]);
     }
-    public function edit(BookList $bookList): Response
+    public function edit(Bookshelf $bookList): Response
     {
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {
@@ -70,7 +70,7 @@ class BookListController extends Controller
         ]);
     }
 
-    public function update(Request $request, BookList $bookList): RedirectResponse
+    public function update(Request $request, Bookshelf $bookList): RedirectResponse
     {
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {
@@ -88,7 +88,7 @@ class BookListController extends Controller
         return redirect()->route('book-lists.index');
     }
 
-    public function destroy(BookList $bookList): RedirectResponse
+    public function destroy(Bookshelf $bookList): RedirectResponse
     {
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {

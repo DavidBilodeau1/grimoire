@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Book;
 use App\Models\BookUser;
 
-class BookList extends Model
+class Bookshelf extends Model
 {
     protected $fillable = [
         'user_id',

@@ -36,12 +36,13 @@ class ReadingGoalController extends Controller
             'name' => $request->name,
         ]);
 
+
         // Create tags
         if ($request->has('tags')) {
             foreach ($request->input('tags') as $tag) {
                 Tag::create([
                     'reading_goal_id' => $readingGoal->id,
-                    'name' => $tag,
+                    'name' => $tag['text'],
                 ]);
             }
         }
