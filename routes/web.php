@@ -28,13 +28,8 @@ Route::group([
     Route::post('/do-import', [BookController::class, 'doImport'])->name('books.do-import');
 });
 
-Route::group([
-    'prefix' => 'bookshelves',
-], function () {
-    Route::get('/', [BookListController::class, 'index'])->name('bookshelves');
-    Route::get('/{bookshelf}', [BookListController::class, 'show'])->name('bookshelves.show');
-    Route::get('/create', [BookListController::class, 'create'])->name('bookshelves.create');
-});
+Route::resource('bookshelves', BookListController::class)
+    ->only(['index', 'create', 'show', 'store', 'edit', 'update','delete']);
 
 Route::resource('reading-goals', ReadingGoalController::class)
     ->only(['index', 'create', 'store', 'edit', 'update','delete']);

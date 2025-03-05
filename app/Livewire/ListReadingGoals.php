@@ -22,12 +22,20 @@ class ListReadingGoals extends Component implements HasForms, HasTable
         return $table
             ->query(ReadingGoal::query()->where('user_id', auth()->id()))
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                ->searchable()
+                ->sortable(),
             ])
             ->actions([
                 Action::make('edit')
                     ->icon('heroicon-o-pencil')
-                    ->url(fn (ReadingGoal $record): string => route('reading-goals.edit', ['reading_goal' => $record]))
+                    ->color('regular')
+                    ->url(fn (ReadingGoal $record): string => route('reading-goals.edit', ['reading_goal' => $record])),
+                Action::make('delete')
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->action(fn (ReadingGoal $record) => $record->delete())
             ]);
     }
 

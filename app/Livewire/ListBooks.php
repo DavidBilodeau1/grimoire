@@ -35,6 +35,7 @@ class ListBooks extends Component implements HasForms, HasTable
                                         ->extraImgAttributes([
                                             'class' => 'object-cover h-fit rounded-t-xl w-full',
                                         ])
+                                        ->defaultImageUrl(url('/images/placeholder.gif'))
                                         ->alignJustify()
                                         ->url(fn (Book $record): string => route('books.show', ['book' => $record])),
                                 ])

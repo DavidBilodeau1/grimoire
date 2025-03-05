@@ -4,6 +4,7 @@ namespace App\Livewire;
 use App\Models\Bookshelf;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -27,7 +28,19 @@ class ListBookLists extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('show')
                     ->icon('heroicon-o-eye')
-                    ->url(fn (Bookshelf $record): string => route('bookshelves.show', ['bookshelf' => $record]))
+                    ->color('primary')
+                    ->url(fn (Bookshelf $record): string => route('bookshelves.show', ['bookshelf' => $record])),
+                Action::make('delete')
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->action(function (Bookshelf $record) {
+                        $record->delete();
+                        Notification::make()
+                            ->title('Bookshelf deleted successfully')
+                            ->success()
+                            ->send();
+                    })
             ]);
     }
 

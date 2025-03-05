@@ -51,13 +51,8 @@ class BookController extends Controller
         return redirect()->back()->with('success', 'Book added to list!');
     }
 
-    public function doImport(Request $request)
+    public static function doImport($file)
     {
-        $request->validate([
-            'csv_file' => 'required|file|mimes:csv,txt',
-        ]);
-
-        $file = $request->file('csv_file');
         $csv = Reader::createFromPath($file->getRealPath(), 'r');
         $csv->setHeaderOffset(0); // Set the header offset to 0 if the first row contains headers
 

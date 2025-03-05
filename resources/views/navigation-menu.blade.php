@@ -18,7 +18,7 @@
                     <x-nav-link href="{{ route('books') }}" :active="request()->routeIs('books')">
                         {{ __('Books') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('bookshelves') }}" :active="request()->routeIs('bookshelves')">
+                    <x-nav-link href="{{ route('bookshelves.index') }}" :active="request()->routeIs('bookshelves')">
                         {{ __('My Bookshelves') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('reading-goals.index') }}" :active="request()->routeIs('reading-goals.index')">

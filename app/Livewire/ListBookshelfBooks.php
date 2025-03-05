@@ -30,7 +30,6 @@ class ListBookshelfBooks extends Component implements HasForms, HasTable
             ->query(Book::query()->when($this->bookshelfId, function ($query, $bookshelfId) {
                 $query->whereHas('bookshelves', function ($q) use ($bookshelfId) {
                     $q->where('bookshelf_id', $bookshelfId);
-                    $q->orderBy('book_bookshelf.position', 'asc');
                 });
             })->join('book_bookshelf', 'book_bookshelf.book_id', 'books.id'))
             ->columns([
@@ -47,10 +46,8 @@ class ListBookshelfBooks extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('author')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('publisher')->searchable()->sortable(),
-            ])
-            ->reorderable('book_bookshelf.position');
+            ]);
     }
-
     public function render()
     {
         return view('livewire.list-bookshelf-books');

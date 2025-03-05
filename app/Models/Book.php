@@ -6,10 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\BookUser;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Book extends Model
+class Book extends Model implements Sortable
 {
     use HasFactory;
+    use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'book_bookshelf.position',
+        'sort_when_creating' => true,
+        'sort_on_has_many' => true,
+    ];
 
     protected $fillable = [
         'title',
@@ -24,21 +33,12 @@ class Book extends Model
         'number_of_pages',
         'year_published',
         'original_publication_year',
-        'date_read',
-        'date_added',
-        'bookshelves',
-        'bookshelves_with_positions',
-        'exclusive_shelf',
-        'my_review',
-        'spoiler',
-        'private_notes',
-        'read_count',
-        'owned_copies',
     ];
 
     public function bookshelves()
     {
-        return $this->belongsToMany(Bookshelf::class, 'book_bookshelf')->withPivot('position');
+        return $this->belongsToMany(Bookshelf::class)
+            ->withPivot('position');
     }
 
     // app/Models/Book.php
@@ -50,5 +50,10 @@ class Book extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->using(BookUser::class);
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('bookshelf_id', $this->bookshelf_id);
     }
 }

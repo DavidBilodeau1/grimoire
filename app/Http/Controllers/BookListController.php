@@ -6,9 +6,7 @@ use App\Models\Bookshelf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Response;
 
 class BookListController extends Controller
 {
@@ -81,7 +79,7 @@ class BookListController extends Controller
         return redirect()->route('book-lists.index');
     }
 
-    public function destroy(Bookshelf $bookList): RedirectResponse
+    public function delete(Bookshelf $bookList): RedirectResponse
     {
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {

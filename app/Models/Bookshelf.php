@@ -15,6 +15,7 @@ class Bookshelf extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class)->withPivot('position')->using(BookBookshelf::class);
+        return $this->belongsToMany(Book::class)
+            ->withPivot('position');
     }
 }

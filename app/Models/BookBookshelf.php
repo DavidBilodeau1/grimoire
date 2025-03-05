@@ -3,25 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\BookUser;
-use Spatie\EloquentSortable\SortableTrait;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class BookBookshelf extends Model
+class BookBookshelf extends Pivot
 {
-    use SortableTrait;
-
     protected $table = 'book_bookshelf';
 
     protected $fillable = [
         'book_id',
         'bookshelf_id',
         'position'
-    ];
-
-    public $sortable = [
-        'order_column_name' => 'position',
-        'sort_when_creating' => true,
     ];
 }
