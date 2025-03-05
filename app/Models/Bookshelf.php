@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Book;
-use App\Models\BookUser;
 
 class Bookshelf extends Model
 {
@@ -16,6 +15,6 @@ class Bookshelf extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class)->using(BookUser::class);
+        return $this->belongsToMany(Book::class)->withPivot('position')->using(BookBookshelf::class);
     }
 }

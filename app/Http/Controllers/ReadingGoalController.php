@@ -12,16 +12,12 @@ class ReadingGoalController extends Controller
 {
     public function index()
     {
-        $readingGoals = ReadingGoal::where('user_id', Auth::id())->with('tags')->get();
-
-        return Inertia::render('ReadingGoals/Index', [
-            'readingGoals' => $readingGoals,
-        ]);
+        return view('ReadingGoals/index');
     }
 
     public function create()
     {
-        return Inertia::render('ReadingGoals/Create');
+        return view('ReadingGoals/create');
     }
 
     public function store(Request $request)
@@ -57,7 +53,7 @@ class ReadingGoalController extends Controller
             abort(403);
         }
 
-        return Inertia::render('ReadingGoals/Edit', [
+        return view('ReadingGoals/edit', [
             'readingGoal' => $readingGoal,
         ]);
     }

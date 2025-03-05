@@ -12,18 +12,14 @@ use Inertia\Response;
 
 class BookListController extends Controller
 {
-    public function index(): Response
+    public function index()
     {
-        $bookLists = Bookshelf::where('user_id', Auth::id())->get();
-
-        return Inertia::render('BookLists/Index', [
-            'bookLists' => $bookLists,
-        ]);
+        return view('Bookshelves/index');
     }
 
-    public function create(): Response
+    public function create()
     {
-        return Inertia::render('BookLists/Create');
+        return view('Bookshelves/create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -41,31 +37,28 @@ class BookListController extends Controller
         return redirect()->route('book-lists.index');
     }
 
-    public function show(Bookshelf $bookList): Response
+    public function show(Bookshelf $bookshelf)
     {
-        if ($bookList->user_id !== Auth::id()) {
+        if ($bookshelf->user_id !== Auth::id()) {
             abort(403);
         }
 
-        $sortBy = request()->input('sort_by', 'title');
-        $sortDirection = request()->input('sort_direction', 'asc');
-
         // Paginate the books relationship with sorting
-        $books = $bookList->books()->orderBy($sortBy, $sortDirection)->paginate(10);
+        $books = $bookshelf->books();
 
-        return Inertia::render('BookLists/Show', [
+        return view('Bookshelves/books', [
             'books' => $books,
-            'bookList' => $bookList,
+            'bookshelf' => $bookshelf,
         ]);
     }
-    public function edit(Bookshelf $bookList): Response
+    public function edit(Bookshelf $bookList)
     {
         // Ensure the user owns the book list
         if ($bookList->user_id !== Auth::id()) {
             abort(403);
         }
 
-        return Inertia::render('BookLists/Edit', [
+        return view('BookLists/Edit', [
             'bookList' => $bookList,
         ]);
     }

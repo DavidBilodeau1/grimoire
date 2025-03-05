@@ -36,9 +36,9 @@ class Book extends Model
         'owned_copies',
     ];
 
-    public function bookLists()
+    public function bookshelves()
     {
-        return $this->belongsToMany(Bookshelf::class)->using(BookUser::class);
+        return $this->belongsToMany(Bookshelf::class, 'book_bookshelf')->withPivot('position');
     }
 
     // app/Models/Book.php

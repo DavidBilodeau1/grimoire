@@ -4,6 +4,7 @@ namespace App\Livewire;
 use App\Models\Bookshelf;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -19,9 +20,14 @@ class ListBookLists extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Bookshelf::query())
+            ->query(Bookshelf::query()->where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('name'),
+            ])
+            ->actions([
+                Action::make('show')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Bookshelf $record): string => route('bookshelves.show', ['bookshelf' => $record]))
             ]);
     }
 

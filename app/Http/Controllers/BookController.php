@@ -8,46 +8,25 @@ use App\Models\BookUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
-use Inertia\Response;
 use League\Csv\Reader;
 
 class BookController extends Controller
 {
-    public function index(Request $request): Response
+
+    public function index(Request $request)
     {
-        $sortBy = $request->input('sort_by', 'title');
-        $sortDirection = $request->input('sort_direction', 'asc');
-        $searchQuery = $request->input('search');
-
-        $books = Book::query();
-
-        if ($searchQuery) {
-            $books->where(function ($query) use ($searchQuery) {
-                $query->where('title', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('author', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('isbn', 'like', '%' . $searchQuery . '%');
-            });
-        }
-
-        $books = $books->orderBy($sortBy, $sortDirection)->paginate(10);
-        $bookLists = Bookshelf::where('user_id', Auth::id())->get();
-
-        return Inertia::render('Books/Index', [
-            'books' => $books,
-            'bookLists' => $bookLists,
-        ]);
+        return view('Books/index');
     }
 
-    public function show(Book $book): Response
+
+    public function show(Book $book)
     {
         $bookLists = Bookshelf::where('user_id', Auth::id())->get();
 
         // Fetch the user-specific information for this book
         $userBookInfo = BookUser::where('user_id', Auth::id())->where('book_id', $book->id)->first();
 
-        return Inertia::render('Books/Show', [
+        return view('Books/Show', [
             'book' => $book,
             'bookLists' => $bookLists,
             'userBookInfo' => $userBookInfo

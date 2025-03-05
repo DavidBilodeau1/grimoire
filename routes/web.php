@@ -1,15 +1,13 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookListController;
 use App\Http\Controllers\ReadingGoalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Livewire\ListBookLists;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return view('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -18,18 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return view('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 Route::group([
     'prefix' => 'books',
-    'namespace' => 'Books',
 ], function () {
     Route::get('/', [BookController::class, 'index'])->name('books');
     Route::get('/{book}', [BookController::class, 'show'])->name('books.show');
@@ -40,13 +31,11 @@ Route::group([
 Route::group([
     'prefix' => 'bookshelves',
 ], function () {
-    Route::get('/', ListBookLists::class)->name('bookshelves');
+    Route::get('/', [BookListController::class, 'index'])->name('bookshelves');
+    Route::get('/{bookshelf}', [BookListController::class, 'show'])->name('bookshelves.show');
+    Route::get('/create', [BookListController::class, 'create'])->name('bookshelves.create');
 });
 
-
-
-
-// routes/web.php
 Route::resource('reading-goals', ReadingGoalController::class)
     ->only(['index', 'create', 'store', 'edit', 'update','delete']);
 

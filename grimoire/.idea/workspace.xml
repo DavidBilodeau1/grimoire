@@ -4,7 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23cc3eb2-9ac8-49b8-a82a-98edc18c9ae1" name="Changes" comment="" />
+    <list default="true" id="23cc3eb2-9ac8-49b8-a82a-98edc18c9ae1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../app/Livewire/CreateReadingGoal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/Livewire/ListReadingGoals.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/Models/BookBookshelf.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Books/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Books/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Bookshelves/books.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Bookshelves/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Bookshelves/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/ReadingGoals/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/ReadingGoals/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/Welcome.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/livewire/create-reading-goal.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/livewire/list-reading-goals.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/vendor/livewire/bootstrap.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/vendor/livewire/simple-bootstrap.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/vendor/livewire/simple-tailwind.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../resources/views/vendor/livewire/tailwind.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Auth/AuthenticatedSessionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Auth/AuthenticatedSessionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Auth/EmailVerificationPromptController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Auth/EmailVerificationPromptController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Auth/RegisteredUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Auth/RegisteredUserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BookController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BookListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BookListController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/ReadingGoalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/ReadingGoalController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Livewire/ListBookLists.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Livewire/ListBookLists.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Models/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Models/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Models/Bookshelf.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Models/Bookshelf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/../bootstrap/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bootstrap/providers.php" beforeDir="false" afterPath="$PROJECT_DIR$/../bootstrap/providers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/../composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/../database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/migrations/0001_01_01_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../database/migrations/0001_01_01_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/components/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/components/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../vite.config.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,26 +180,26 @@
       <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
     </include_path>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2tbQsfdqwPmHcUzUcrcVLCgjuiN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
@@ -177,6 +223,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740618503636</updated>
       <workItem from="1740618504936" duration="939000" />
+      <workItem from="1741121752947" duration="4000" />
     </task>
     <servers />
   </component>
