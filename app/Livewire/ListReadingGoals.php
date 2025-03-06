@@ -27,6 +27,10 @@ class ListReadingGoals extends Component implements HasForms, HasTable
                 ->sortable(),
             ])
             ->actions([
+                Action::make('books')
+                    ->icon('heroicon-o-bookmark-square')
+                    ->color('info')
+                    ->url(fn (ReadingGoal $record): string => route('reading-goals.add-books', ['reading_goal' => $record])),
                 Action::make('edit')
                     ->icon('heroicon-o-pencil')
                     ->color('regular')

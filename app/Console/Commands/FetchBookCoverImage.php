@@ -35,9 +35,9 @@ class FetchBookCoverImage extends Command
     private function fetchCoverImage(Book $book)
     {
         $client = new Client();
-        $client->setApplicationName('grimoire'); // Replace with your app name
+        $client->setApplicationName(config('services.google.application_name')); // Replace with your app name
         $client->setScopes([Books::BOOKS]);
-        $client->setDeveloperKey('AIzaSyBqMrs8u3rWdOJy1lFaWy1k1r8kQoKF7DM'); // Replace with your Google Books API key
+        $client->setDeveloperKey(config('services.google.api_key')); // Replace with your Google Books API key
 
         $service = new Books($client);
         try {

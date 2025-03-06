@@ -20,6 +20,13 @@ class ReadingGoalController extends Controller
         return view('ReadingGoals/create');
     }
 
+    public function addBooks(ReadingGoal $readingGoal)
+    {
+        return view('ReadingGoals/add-books', [
+            'readingGoal' => $readingGoal,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

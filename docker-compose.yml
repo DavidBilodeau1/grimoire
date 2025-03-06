@@ -6,6 +6,10 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: 'sail-8.4/app'
+        labels:
+            traefik.enable: "true"
+            traefik.http.routers.grimoire.rule: "Host(`grimoire.4192-saint-andre.com`)"
+            traefik.http.routers.grimoire.entryPoints: "https"
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:

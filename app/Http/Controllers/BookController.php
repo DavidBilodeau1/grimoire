@@ -33,8 +33,13 @@ class BookController extends Controller
         ]);
     }
 
-    public function addToList(Request $request, Book $book)
+    public function addToBookshelf(Request $request, Book $book)
     {
+        $bookShelves = Bookshelf::where('user_id', Auth::id())->get();
+        return view('Books/add-to-bookshelf', [
+            'bookshelves' => $bookShelves,
+        ]);
+        /*
         $request->validate([
             'book_list_id' => 'required|exists:book_lists,id',
         ]);
@@ -48,7 +53,7 @@ class BookController extends Controller
 
         $bookList->books()->attach($book->id);
 
-        return redirect()->back()->with('success', 'Book added to list!');
+        return redirect()->back()->with('success', 'Book added to list!');*/
     }
 
     public static function doImport($file)

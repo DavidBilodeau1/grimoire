@@ -3,12 +3,22 @@
 namespace App\Livewire;
 
 use App\Models\Book;
+use App\Models\Bookshelf;
+use App\Models\BookUser;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\Action;
 use Filament\Tables;
 use Livewire\Component;
 
@@ -37,7 +47,6 @@ class ListBooks extends Component implements HasForms, HasTable
                                         ])
                                         ->defaultImageUrl(url('/images/placeholder.gif'))
                                         ->alignJustify()
-                                        ->url(fn (Book $record): string => route('books.show', ['book' => $record])),
                                 ])
                                 ->columns(1)
                                 ->columnStart(2),
@@ -68,7 +77,79 @@ class ListBooks extends Component implements HasForms, HasTable
                 'xl' => 4,
                 '2xl' => 4,
             ])
-            ->deferLoading(false);
+            ->recordUrl(fn (Book $record): string => route('books.show', ['book' => $record]))
+            ->actions(
+                ActionGroup::make([
+                    Action::make('addToBookshelf')
+                    ->icon('heroicon-o-plus')
+                    ->color('primary')
+                    ->form([
+                        Select::make('bookshelfId')
+                            ->label('Bookshelf')
+                            ->options(Bookshelf::query()->pluck('name', 'id'))
+                            ->required(),
+                    ])
+                    ->action(function (array $data, Book $record): void {
+                        $record->bookshelves()->attach($data['bookshelfId']);
+                        $record->save();
+                        Notification::make()
+                            ->title('Book added!')
+                            ->success()
+                            ->send();
+                    }),
+                    Action::make('RateAndReview')
+                    ->icon('heroicon-o-sparkles')
+                    ->form([
+                        TextInput::make('my_rating')
+                            ->numeric()
+                            ->inputMode('decimal'),
+                        RichEditor::make('my_review'),
+                        Checkbox::make('spoiler'),
+                        RichEditor::make('private_notes'),
+                    ])
+                    ->action(function (array $data, Book $record): void {
+                        $bookUser = new BookUser();
+                        $bookUser->fill([
+                            'user_id' => auth()->id(),
+                            'book_id' => $record->id,
+                            'my_review' => $data['my_review'],
+                            'my_rating' => $data['my_rating'],
+                            'spoiler' => $data['spoiler'],
+                            'private_notes' => $data['private_notes'],
+                        ]);
+                        $bookUser->save();
+                        $record->users()->attach($bookUser->id);
+                        $record->save();
+                        Notification::make()
+                            ->title('Review added!')
+                            ->success()
+                            ->send();
+                    }),
+                    Action::make('updateProgress')
+                    ->icon('heroicon-o-check-badge')
+                    ->form([
+                        TextInput::make('progress')
+                            ->numeric()
+                            ->inputMode('decimal'),
+                    ])
+                    ->action(function (array $data, Book $record): void {
+                        $bookUser = new BookUser();
+                        $bookUser->fill([
+                            'user_id' => auth()->id(),
+                            'book_id' => $record->id,
+                            'progress' => $data['progress'],
+                        ]);
+                        $bookUser->save();
+                        $record->users()->attach($bookUser->id);
+                        $record->save();
+                        Notification::make()
+                            ->title('Progress saved!')
+                            ->success()
+                            ->send();
+                    })
+                ])
+            )
+            ->deferLoading(true);
     }
 
     public function render()

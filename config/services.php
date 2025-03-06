@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'google' => [
+        'application_name' => env('GOOGLE_APPLICATION_NAME'),
+        'api_key' => env('GOOGLE_API_KEY'),
+    ]
+
 ];

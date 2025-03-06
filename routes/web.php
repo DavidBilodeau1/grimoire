@@ -6,6 +6,7 @@ use App\Http\Controllers\ReadingGoalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('Welcome', [
         'canLogin' => Route::has('login'),
@@ -24,7 +25,7 @@ Route::group([
 ], function () {
     Route::get('/', [BookController::class, 'index'])->name('books');
     Route::get('/{book}', [BookController::class, 'show'])->name('books.show');
-    Route::post('/{book}/add-to-list', [BookController::class, 'addToList'])->name('books.add-to-list');
+    Route::post('/{book}/add-to-bookshelf', [BookController::class, 'addToBookshelf'])->name('books.add-to-bookshelf');
     Route::post('/do-import', [BookController::class, 'doImport'])->name('books.do-import');
 });
 
@@ -33,5 +34,7 @@ Route::resource('bookshelves', BookListController::class)
 
 Route::resource('reading-goals', ReadingGoalController::class)
     ->only(['index', 'create', 'store', 'edit', 'update','delete']);
+
+Route::get('/{reading_goal}/add', [ReadingGoalController::class, 'addBooks'])->name('reading-goals.add-books');
 
 require __DIR__.'/auth.php';

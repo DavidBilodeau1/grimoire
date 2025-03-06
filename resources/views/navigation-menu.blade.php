@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('books') }}" :active="request()->routeIs('books')">
-                        {{ __('Books') }}
+                        {{ __('Library') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('bookshelves.index') }}" :active="request()->routeIs('bookshelves')">
                         {{ __('My Bookshelves') }}
