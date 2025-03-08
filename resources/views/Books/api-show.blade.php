@@ -15,11 +15,10 @@
         </div>
         <div class="md:w-2/3 md:pl-8">
             <h1 class="text-3xl font-bold mb-4">{{ $book->title }}</h1>
-            <p class="text-gray-600 mb-2">by {{ $book->author }}</p>
+            <p class="text-gray-600 mb-2">by {{ $book->authors }}</p>
 
             <div class="flex items-center mb-4">
                 <!--x-filament::forms.components.star-rating :rating="$book->average_rating" disabled /-->
-                <span class="ml-2 text-gray-600">({{ $book->average_rating }} average rating)</span>
             </div>
 
             <p class="mb-6">{{ $book->description ?? '' }}</p>
@@ -44,9 +43,17 @@
             </div>
 
             <div class="mt-8">
-                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add to Bookshelf
-                </a>
+                <x-filament::modal>
+                    <x-slot name="trigger">
+                        <x-filament::button>
+                            Add to Bookshelf
+                        </x-filament::button>
+                    </x-slot>
+
+                    <div class="relative w-full max-w-2xl max-h-full">
+                        @livewire('bookshelf-selection', ['book' => base64_encode(json_encode($book)) ])
+                    </div>
+                </x-filament::modal>
             </div>
         </div>
     </div>

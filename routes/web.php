@@ -25,9 +25,18 @@ Route::group([
 ], function () {
     Route::get('/', [BookController::class, 'index'])->name('books');
     Route::get('/{book}', [BookController::class, 'show'])->name('books.show');
-    Route::post('/{book}/add-to-bookshelf', [BookController::class, 'addToBookshelf'])->name('books.add-to-bookshelf');
+    Route::post('/add-to-bookshelf', [BookController::class, 'addToBookshelf'])->name('books.add-to-bookshelf');
     Route::post('/do-import', [BookController::class, 'doImport'])->name('books.do-import');
+    // routes/web.php
+
 });
+
+Route::get('/api-show', function () {
+    $book = session()->get('selectedBook');
+    return view('Books.api-show', ['book' => $book]);
+})->name('books.api-show');
+
+Route::post('/api-add-to-bookshelf', [BookController::class, 'apiAddToBookshelf'])->name('books.api-add-to-bookshelf');
 
 Route::resource('bookshelves', BookListController::class)
     ->only(['index', 'create', 'show', 'store', 'edit', 'update','delete']);

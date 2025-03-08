@@ -9,16 +9,9 @@ use App\Models\BookUser;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
-class Book extends Model implements Sortable
+class Book extends Model
 {
     use HasFactory;
-    use SortableTrait;
-
-    public $sortable = [
-        'order_column_name' => 'book_bookshelf.position',
-        'sort_when_creating' => true,
-        'sort_on_has_many' => true,
-    ];
 
     protected $fillable = [
         'title',
@@ -33,11 +26,12 @@ class Book extends Model implements Sortable
         'number_of_pages',
         'year_published',
         'original_publication_year',
+        'description'
     ];
 
     public function bookshelves()
     {
-        return $this->belongsToMany(Bookshelf::class)
+        return $this->belongsToMany(Bookshelf::class, 'book_bookshelf', 'book_id', 'bookshelf_id')
             ->withPivot('position');
     }
 

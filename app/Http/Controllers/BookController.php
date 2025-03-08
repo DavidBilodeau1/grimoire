@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\BookBookshelf;
 use App\Models\Bookshelf;
 use App\Models\BookUser;
 use Carbon\Carbon;
+use http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use League\Csv\Reader;
@@ -33,27 +35,39 @@ class BookController extends Controller
         ]);
     }
 
-    public function addToBookshelf(Request $request, Book $book)
+    public function addToBookshelf()
     {
         $bookShelves = Bookshelf::where('user_id', Auth::id())->get();
         return view('Books/add-to-bookshelf', [
             'bookshelves' => $bookShelves,
         ]);
-        /*
-        $request->validate([
-            'book_list_id' => 'required|exists:book_lists,id',
-        ]);
+    }
 
-        $bookList = Bookshelf::findOrFail($request->book_list_id);
+    public static function apiAddToBookshelf(string $data, $bookshelfId)
+    {
+        try {
+            $bookData = json_decode(base64_decode($data), true);
 
-        // Ensure the user owns the book list
-        if ($bookList->user_id !== Auth::id()) {
-            abort(403);
+            // Find or create the book
+            $book = new Book();
+            $book->title = $bookData['title'];
+            $book->author = $bookData['authors'];
+            $book->cover_image = $bookData['cover_image'];
+            $book->description = $bookData['description'];
+            $book->isbn = $bookData['isbn'];
+            $book->publisher = $bookData['publisher'];
+            $book->number_of_pages = $bookData['page_count'];
+            $book->save();
+
+            $nextPosition = $book->bookshelves()->where('bookshelf_id', $bookshelfId)->max('position') + 1;
+
+            $book->bookshelves()->attach($bookshelfId, ['position' => $nextPosition]);
+
+            return response()->json(['message' => 'Book added to bookshelf']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
         }
 
-        $bookList->books()->attach($book->id);
-
-        return redirect()->back()->with('success', 'Book added to list!');*/
     }
 
     public static function doImport($file)

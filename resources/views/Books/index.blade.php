@@ -4,7 +4,8 @@
             {{ __('Library') }}
         </h2>
     </x-slot>
-    <div class="pt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="flex justify-end items-center gap-2 pt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <livewire:book-search/>
         <x-filament::modal>
             <x-slot name="trigger">
                 <x-filament::button>
