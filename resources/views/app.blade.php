@@ -13,10 +13,12 @@
         <!-- Scripts -->
         @routes
         @livewireStyles
+        @filamentStyles
         @vite('resources/css/app.css')
     </head>
     <body class="font-sans antialiased">
         @livewireScripts
+        @filamentScripts
         @vite('resources/js/app.js')
     </body>
 </html>

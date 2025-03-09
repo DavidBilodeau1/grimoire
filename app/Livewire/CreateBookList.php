@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Bookshelf;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -22,6 +23,7 @@ class CreateBookList extends Component implements HasForms
         $this->bookshelf = $bookshelf;
         $this->form->fill([
             'name' => $bookshelf?->name,
+            'is_main' => $bookshelf?->is_main,
         ]);
     }
 
@@ -30,6 +32,7 @@ class CreateBookList extends Component implements HasForms
         return $form
             ->schema([
                 TextInput::make('name'),
+                Toggle::make('is_main')
             ])
             ->statePath('data');
     }

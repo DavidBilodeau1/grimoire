@@ -49,15 +49,15 @@ class BookListController extends Controller
             'bookshelf' => $bookshelf,
         ]);
     }
-    public function edit(Bookshelf $bookList)
+    public function edit(Bookshelf $bookshelf)
     {
-        // Ensure the user owns the book list
-        if ($bookList->user_id !== Auth::id()) {
+        if ($bookshelf->user_id !== Auth::id()) {
             abort(403);
         }
+        // Ensure the user owns the book list
 
-        return view('BookLists/Edit', [
-            'bookList' => $bookList,
+        return view('Bookshelves.edit', [
+            'bookshelf' => $bookshelf,
         ]);
     }
 

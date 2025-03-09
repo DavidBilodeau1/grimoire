@@ -4,8 +4,12 @@ namespace App\Livewire;
 
 use App\Models\Book;
 use App\Models\BookBookshelf;
+use App\Models\Bookshelf;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -31,7 +35,7 @@ class ListBookshelfBooks extends Component implements HasForms, HasTable
                 $query->whereHas('bookshelves', function ($q) use ($bookshelfId) {
                     $q->where('bookshelf_id', $bookshelfId);
                 });
-            })->join('book_bookshelf', 'book_bookshelf.book_id', 'books.id'))
+            }))
             ->columns([
                 ImageColumn::make('cover_image')
                     ->height('200px')
@@ -42,10 +46,25 @@ class ListBookshelfBooks extends Component implements HasForms, HasTable
                         'class' => 'object-cover h-fit rounded-t-xl w-full',
                     ])
                     ->alignJustify()
-                    ->url(fn (Book $record): string => route('books.show', ['book' => $record])),
+                    ->url(fn (Book $record): string => route('books.show', ['book' => $record->id])),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('author')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('publisher')->searchable()->sortable(),
+            ])->actions([
+                Action::make('removeFromBookshelf')
+                    ->icon('heroicon-o-trash')
+                    ->iconButton()
+                    ->tooltip('Remove From Bookshelf')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(function ($record): void {
+                        $record->bookshelves()->detach($this->bookshelfId);
+                        $record->save();
+                        Notification::make()
+                            ->title('Book removed!')
+                            ->success()
+                            ->send();
+                    })
             ]);
     }
     public function render()

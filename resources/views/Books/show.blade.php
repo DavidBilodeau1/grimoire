@@ -50,5 +50,34 @@
             </div>
         </div>
     </div>
+    <div class="mt-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4">Ratings and Reviews</h2>
+
+            <div class="flex items-center mb-4">
+                <x-star-rating :rating="$book->average_rating"  disabled />
+            </div>
+
+            @if ($book->users()->count() > 0)
+                <div class="space-y-4">
+                    @foreach ($book->users()->get() as $bookUser)
+                        @if ($bookUser->getOriginal('pivot_my_rating') || $bookUser->getOriginal('pivot_my_review'))
+                            <div class="border-t pt-4">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-semibold">{{ $bookUser->name }} says...</span>
+                                    <!--x-filament::forms.components.star-rating :rating="$bookUser->getOriginal('pivot_my_rating')" disabled class="ml-2" /-->
+                                    <x-star-rating :rating="$bookUser->getOriginal('pivot_my_rating')"  disabled />
+
+                                </div>
+                                <p>{!! $bookUser->getOriginal('pivot_my_review') !!}</p>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            @else
+                <p>No reviews yet.</p>
+            @endif
+        </div>
+    </div>
 </div>
 </x-app-layout>

@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+
 [x-cloak] {
     display: none;
+}
+
+.filament-forms-star-rating-star--full {
+    z-index: 2; /* Ensure full stars are on top */
+}
+
+.filament-forms-star-rating-star--half {
+    z-index: 1; /* Ensure half stars are below full stars */
+    margin-left: -0.5rem; /* Slightly overlap half stars */
+}
+
+.filament-forms-star-rating button:hover .fa-star {
+    display: none;
+}
+
+.filament-forms-star-rating button:hover .fa-star-half-alt {
+    display: none;
+}
+
+.filament-forms-star-rating button:hover::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color:#FFD43B;
+    content: "\f005"; /* Solid star icon */
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
 }

@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\BookUser;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\BookUser;
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableTrait;
+use Illuminate\Support\Facades\Schema;
 
 class Book extends Model
 {
@@ -43,7 +42,13 @@ class Book extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(BookUser::class);
+        $fields = Schema::getColumnListing('book_user');
+        return $this->belongsToMany(User::class)->using(BookUser::class)->withPivot($fields);
+    }
+
+    public function bookUsers()
+    {
+        return $this->belongsToMany(BookUser::class)->using(BookUser::class);
     }
 
     public function buildSortQuery()

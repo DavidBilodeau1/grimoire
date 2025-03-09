@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Forms\Components\HalfStarRating;
 use App\Models\Book;
 use App\Models\Bookshelf;
 use App\Models\BookUser;
@@ -100,9 +101,9 @@ class ListBooks extends Component implements HasForms, HasTable
                     Action::make('RateAndReview')
                     ->icon('heroicon-o-sparkles')
                     ->form([
-                        TextInput::make('my_rating')
-                            ->numeric()
-                            ->inputMode('decimal'),
+                        HalfStarRating::make('my_rating')
+                            ->maxRating(5)
+                            ->dehydrated(false),
                         RichEditor::make('my_review'),
                         Checkbox::make('spoiler'),
                         RichEditor::make('private_notes'),

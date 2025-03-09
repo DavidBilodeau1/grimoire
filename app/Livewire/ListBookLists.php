@@ -28,8 +28,12 @@ class ListBookLists extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('show')
                     ->icon('heroicon-o-eye')
-                    ->color('primary')
+                    ->color('info')
                     ->url(fn (Bookshelf $record): string => route('bookshelves.show', ['bookshelf' => $record])),
+                Action::make('edit')
+                    ->icon('heroicon-o-pencil')
+                    ->color('warning')
+                    ->url(fn (Bookshelf $record): string => route('bookshelves.edit', ['bookshelf' => $record])),
                 Action::make('delete')
                     ->requiresConfirmation()
                     ->icon('heroicon-o-trash')

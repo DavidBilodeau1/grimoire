@@ -18,7 +18,7 @@
                     <x-nav-link href="{{ route('books') }}" :active="request()->routeIs('books')">
                         {{ __('Library') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('bookshelves.index') }}" :active="request()->routeIs('bookshelves')">
+                    <x-nav-link href="{{ route('bookshelves.index') }}" :active="request()->routeIs('bookshelves.index')">
                         {{ __('My Bookshelves') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('reading-goals.index') }}" :active="request()->routeIs('reading-goals.index')">
@@ -28,7 +28,7 @@
                         $bookshelves = \App\Models\Bookshelf::where(['user_id' => Auth::user()->id, 'is_main' => true])->get();
                     @endphp
                     @foreach($bookshelves as $bookshelf)
-                        <x-nav-link href="{{ route('bookshelves.show', ['bookshelf' => $bookshelf]) }}" :active="request()->routeIs('bookshelves.show', ['bookshelf' => $bookshelf])">
+                        <x-nav-link href="{{ route('bookshelves.show', ['bookshelf' => $bookshelf]) }}" :active="request()->route()->parameter('bookshelf')?->id == $bookshelf->id">
                             {{ $bookshelf->name }}
                         </x-nav-link>
                     @endforeach
